@@ -109,6 +109,19 @@ class _PriceScreenState extends State<PriceScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: columnChildren,
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.refresh,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.lightBlueAccent,
+        elevation: 12.0,
+        onPressed: () {
+          setState(() {
+            getPrices();
+          });
+        },
+      ),
     );
   }
 }
