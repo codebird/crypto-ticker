@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:loader_overlay/loader_overlay.dart';
+import 'fetching_overlay.dart';
 import 'dart:io' show Platform;
 import 'coin_data.dart';
 import 'crypto_card.dart';
@@ -12,7 +14,6 @@ class PriceScreen extends StatefulWidget {
 class _PriceScreenState extends State<PriceScreen> {
   String currency = 'USD';
   Map<String, double> prices = {};
-
   @override
   void initState() {
     super.initState();
@@ -64,12 +65,14 @@ class _PriceScreenState extends State<PriceScreen> {
   }
 
   void getPrices() async {
+    context.loaderOverlay.show(widget: FetchingOverlay());
     var coin = CoinData();
     Map<String, double> localPrices = {};
     for (String crypto in cryptoList) {
       localPrices[crypto] = await coin.getData(currency, crypto);
     }
     setState(() {
+      context.loaderOverlay.hide();
       prices = localPrices;
     });
   }
